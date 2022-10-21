@@ -5,8 +5,7 @@ const allIntents = new Discord.Intents(32767)
 const client = new Discord.Client({
   intents: allIntents,
 })
-
-const config = require("./config.json")
+require("dotenv").config()
 
 const birthday = require("./birthday")
 const memberCount = require("./memberCount")
@@ -44,4 +43,4 @@ client.on("ready", async () => {
   count(client)
 })
 
-client.login(config.token)
+client.login(process.env.TOKEN)

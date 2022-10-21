@@ -1,5 +1,8 @@
-const { prefixes } = require("../config.json");
-let prefix;
+require("dotenv").config()
+
+const PREFIXES = process.env.PREFIXES.split(",")
+
+let prefix
 
 const validatePermissions = (permissions) => {
   const validPermissions = [
@@ -39,26 +42,23 @@ const validatePermissions = (permissions) => {
     "MANAGE_THREADS",
     "USE_PUBLIC_THREADS",
     "USE_PRIVATE_THREADS",
-  ];
+  ]
 
   for (const permission of permissions) {
     if (!validPermissions.includes(permission)) {
-      throw new Error(`Unknown Permission: ${permission}`);
+      throw new Error(`Unknown Permission: ${permission}`)
     }
   }
-};
+}
 
 const allCommands = {}
 
 module.exports = (commandOptions) => {
-  let {
-    commands,
-    permissions = [],
-  } = commandOptions;
+  let { commands, permissions = [] } = commandOptions
 
   // Ensure commands and aliases are in an array
   if (typeof commands === "string") {
-    commands = [commands];
+    commands = [commands]
   }
 
   console.log(`Registering command: "${commands[0]}"`)
@@ -66,29 +66,29 @@ module.exports = (commandOptions) => {
   // Ensure the permissions are in an array and are all valid
   if (permissions.length) {
     if (typeof permissions === "string") {
-      permissions = [permissions];
+      permissions = [permissions]
     }
-    
-    validatePermissions(permissions);
+
+    validatePermissions(permissions)
   }
 
-  for(const command of commands) {
+  for (const command of commands) {
     allCommands[command] = {
       ...commandOptions,
       command,
       permissions,
     }
   }
-};
+}
 
 module.exports.listen = (client) => {
   // Listen for messages
   client.on("message", (message) => {
-    const { member, content, guild } = message;
+    const { member, content, guild } = message
 
-    for (thisPrefix of prefixes) {
+    for (thisPrefix of PREFIXES) {
       if (content.toLowerCase().startsWith(thisPrefix)) {
-        prefix = thisPrefix;
+        prefix = thisPrefix
       }
     }
 
@@ -96,14 +96,14 @@ module.exports.listen = (client) => {
     const arguments = content.split(/[ ]+/)
 
     // getting prefix + command
-    const name = arguments.splice(0, 2).join(' ').toLowerCase()
-  
-    if(name.startsWith(prefix)){
+    const name = arguments.splice(0, 2).join(" ").toLowerCase()
+
+    if (name.startsWith(prefix)) {
       const command = allCommands[name.replace(prefix, "")]
-      if(!command){
+      if (!command) {
         return
       }
-      
+
       const {
         permissions,
         permissionError = "You do not have permission to run this command.",
@@ -111,7 +111,7 @@ module.exports.listen = (client) => {
         minArgs = 0,
         maxArgs = null,
         expectedArgs = "",
-        callback
+        callback,
       } = command
 
       // Command is to be run
@@ -119,35 +119,31 @@ module.exports.listen = (client) => {
       // Ensure user has required permissions
       for (const permission of permissions) {
         if (!member.hasPermission(permission)) {
-          message.reply(permissionError);
-          return;
+          message.reply(permissionError)
+          return
         }
       }
 
       // Ensure user has required roles
       for (const requiredRole of requiredRoles) {
-        const role = guild.roles.cache.find(
-          (role) => role.name === requiredRole
-        );
+        const role = guild.roles.cache.find((role) => role.name === requiredRole)
 
         if (!role || !member.roles.cache.has(role.id)) {
           message.reply(
             `You must have the "${requiredRole}" role or this role does not exist. Contact server Admins if you think this is a mistake.`
-          );
-          return;
+          )
+          return
         }
       }
 
       // Ensure we have correct number or arguments
-      if(arguments.length < minArgs || (
-        maxArgs !== null && arguments.length > maxArgs
-      )){
+      if (arguments.length < minArgs || (maxArgs !== null && arguments.length > maxArgs)) {
         message.reply(`Incorrect syntax! use ${name} ${expectedArgs}`)
         return
       }
 
       // Handle custom command code
-      callback(message, arguments, arguments.join(' '))
-      }
-  });
+      callback(message, arguments, arguments.join(" "))
+    }
+  })
 }
