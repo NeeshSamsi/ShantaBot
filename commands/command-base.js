@@ -143,8 +143,8 @@ module.exports.listen = (client) => {
       }
 
       // Handle custom command code
-      callback(message, arguments, arguments.join(" "))
       console.log("Running " + command)
+      callback(message, arguments, arguments.join(" "))
     }
   })
 }
