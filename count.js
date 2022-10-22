@@ -2,17 +2,20 @@ module.exports = (client) => {
   const channelId = "1032935088536694845"
 
   client.on("message", (message) => {
-    // console.log(message.channel)
-    if (message.channel.id === channelId) {
-      if (isNaN(Number(message.content))) {
-        return
-      } else if (message.author.id === "785469565227630592") {
-        return
-      } else {
-        setTimeout(() => {
-          message.channel.send(Number(message.content) + 1)
-        }, 1500)
-      }
+    console.log(message.content)
+
+    if (message.channel.id !== channelId) {
+      return
     }
+    if (isNaN(Number(message.content))) {
+      return
+    }
+    if (message.author.id === "785469565227630592") {
+      return
+    }
+
+    setTimeout(() => {
+      message.channel.send(Number(message.content) + 1)
+    }, 1000)
   })
 }
