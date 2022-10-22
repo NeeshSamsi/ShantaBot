@@ -39,7 +39,7 @@ module.exports = {
       }
     })
 
-    const helpMessage = commands.map((command) => `\n**${command.name}**: \n${command.description}`).join("\n\n")
+    const helpMessage = commands.map((command) => `\n\n**${command.name}**: \n${command.description}`).join("\n")
 
     message.reply(helpMessage)
   },
