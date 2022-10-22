@@ -1,5 +1,6 @@
 module.exports = {
   commands: ["rr", "russianroulette"],
+  description: "Play Russian Roulette. Do you trust your luck?",
   expectedArgs: "",
   permissionError: "You do not have permission to run this command.",
   minArgs: 0,

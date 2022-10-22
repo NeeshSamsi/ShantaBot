@@ -1,7 +1,8 @@
-const { MessageFlags } = require("discord.js");
+const { MessageFlags } = require("discord.js")
 
 module.exports = {
   commands: ["cc", "clearchannel"],
+  description: "Deletes specified number of messages.",
   expectedArgs: "<no. of messages> <optional channel>",
   permissionError: "You need Admin permissions to run this command.",
   minArgs: 1,
@@ -10,49 +11,48 @@ module.exports = {
     const amount = parseInt(arguments[0])
     const channelArg = arguments[1]
 
-
     // message.guild.channels.cache.find()
 
     const delAmtMsgs = (amt, channel) => {
-      channel.messages.fetch({limit: amt}).then(results => {
+      channel.messages.fetch({ limit: amt }).then((results) => {
         channel.bulkDelete(results)
       })
     }
 
-    if(!channelArg){
+    if (!channelArg) {
       const targetChannel = message.channel
       delAmtMsgs(amount + 1, targetChannel)
 
-      if(amount === 1){
-        targetChannel.send(`${amount} message deleted!`).then(message => {
+      if (amount === 1) {
+        targetChannel.send(`${amount} message deleted!`).then((message) => {
           setTimeout(() => {
             message.delete()
           }, 4000)
         })
-      } else{
-        targetChannel.send(`${amount} messages deleted!`).then(message => {
+      } else {
+        targetChannel.send(`${amount} messages deleted!`).then((message) => {
           setTimeout(() => {
             message.delete()
           }, 4000)
         })
       }
     } else {
-      channelId = channelArg.replace('<#', '').replace('>', '')
+      channelId = channelArg.replace("<#", "").replace(">", "")
       console.log(message.guild.channels.cache.get(channelId) === message.channel)
 
       const targetChannel = message.guild.channels.cache.get(channelId)
 
       delAmtMsgs(1, message.channel)
       delAmtMsgs(amount, targetChannel)
-      
-      if(amount === 1){
-        targetChannel.send(`${amount} message deleted!`).then(message => {
+
+      if (amount === 1) {
+        targetChannel.send(`${amount} message deleted!`).then((message) => {
           setTimeout(() => {
             message.delete()
           }, 4000)
         })
-      } else{
-        targetChannel.send(`${amount} messages deleted!`).then(message => {
+      } else {
+        targetChannel.send(`${amount} messages deleted!`).then((message) => {
           setTimeout(() => {
             message.delete()
           }, 4000)
@@ -60,6 +60,6 @@ module.exports = {
       }
     }
   },
-  permissions: 'ADMINISTRATOR',
+  permissions: "ADMINISTRATOR",
   requiredRoles: [],
-};
+}

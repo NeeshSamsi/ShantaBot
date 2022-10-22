@@ -1,14 +1,15 @@
 module.exports = {
   commands: ["birthday", "bday"],
+  description: "Forgot what that does tbh.",
   expectedArgs: "<optional name> \n (Names: 'Pattu', 'Shan', 'Sem', 'Ishrat', 'Chakku', 'Neesh')",
   permissionError: "You do not have permission to run this command.",
   minArgs: 0,
   maxArgs: 1,
   callback: (message, arguments, text) => {
-    const bdayFilePath = __dirname.replace('\\commands\\functionality', '') + '\\birthday.js'
+    const bdayFilePath = __dirname.replace("\\commands\\functionality", "") + "\\birthday.js"
     const birthday = require(bdayFilePath)
 
-    const now = new Date();
+    const now = new Date()
     const bdaysData = [
       {
         name: "Pattu",
@@ -40,32 +41,34 @@ module.exports = {
         birthdate: new Date(`June 18, ${now.getFullYear()} 00:00:00`),
         birthyear: 2004,
       },
-    ];
+    ]
 
-    if(arguments.length === 0){
+    if (arguments.length === 0) {
       const bdayObject = birthday.getClosest(bdaysData, now)
       const daysLeft = birthday.getCountdown(bdayObject.birthdate - now) + 1
       console.log(daysLeft)
 
-      if(daysLeft !== 1){
+      if (daysLeft !== 1) {
         message.channel.send(`There are ${daysLeft} days left for ${bdayObject.name}'s Birthday!`)
-      } else{
+      } else {
         message.channel.send(`Tomorrow is ${bdayObject.name}'s Birthday!`)
       }
     } else {
-      const bdayObject = bdaysData.find(obj => obj.name.toLowerCase() === arguments[0].toLowerCase())
-      if(bdayObject){
+      const bdayObject = bdaysData.find((obj) => obj.name.toLowerCase() === arguments[0].toLowerCase())
+      if (bdayObject) {
         const daysLeft = birthday.getCountdown(bdayObject.birthdate - now) + 1
-        if(daysLeft !== 1){
+        if (daysLeft !== 1) {
           message.channel.send(`There are ${daysLeft} days left for ${bdayObject.name}'s Birthday!`)
-        } else{
+        } else {
           message.channel.send(`Tomorrow is ${bdayObject.name}'s Birthday!`)
         }
-      } else{
-        message.channel.send(`${arguments[0]} is not part of the data, please use 'Pattu', 'Shan', 'Sem', 'Ishrat', 'Chakku', 'Neesh'`)
-      } 
+      } else {
+        message.channel.send(
+          `${arguments[0]} is not part of the data, please use 'Pattu', 'Shan', 'Sem', 'Ishrat', 'Chakku', 'Neesh'`
+        )
+      }
     }
   },
   permissions: [],
   requiredRoles: [],
-};
+}

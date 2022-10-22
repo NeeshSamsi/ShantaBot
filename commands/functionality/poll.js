@@ -1,11 +1,12 @@
 module.exports = {
   commands: "poll",
+  description: "Create a poll with 2 emoji reactions",
   expectedArgs: "<optional emoji> <optional emoji>",
   permissionError: "You do not have permission to run this command.",
   minArgs: 0,
   maxArgs: null,
   callback: async (message, arguments, text) => {
-    let defaultReactions = ['👍', '👎']
+    let defaultReactions = ["👍", "👎"]
 
     await message.delete()
 
@@ -15,14 +16,14 @@ module.exports = {
       targetMsg.first().react(`${reactions[0]}`)
       reactions.shift()
 
-      if(reactions.length > 0){
+      if (reactions.length > 0) {
         setTimeout(() => {
           addReactions(reactions)
-        }, 750);
+        }, 750)
       }
     }
 
-    if(arguments.length === 0){
+    if (arguments.length === 0) {
       addReactions(defaultReactions)
     } else {
       let customReactions = arguments
@@ -31,4 +32,4 @@ module.exports = {
   },
   permissions: [],
   requiredRoles: [],
-};
+}

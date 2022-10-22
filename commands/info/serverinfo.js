@@ -1,5 +1,6 @@
 module.exports = {
   commands: ["serverinfo", "info"],
+  descriptions: "Returns incomplete server info",
   expectedArgs: "",
   permissionError: "You do not have permission to run this command.",
   minArgs: 0,
@@ -15,15 +16,15 @@ module.exports = {
       author: {
         name: message.client.user.username,
         icon_url: message.client.user.displayAvatarURL(),
-        url: 'https://github.com/NeeshSamsi/ShantaBot'
+        url: "https://github.com/NeeshSamsi/ShantaBot",
       },
       thumbnail: {
-        url: iconUrl
+        url: iconUrl,
       },
       fields: [
         {
-          name: '\u200b',
-          value: '\u200b',
+          name: "\u200b",
+          value: "\u200b",
         },
         {
           name: "Region",
@@ -36,12 +37,12 @@ module.exports = {
         {
           name: "Owner",
           value: owner.user.tag,
-        }
+        },
       ],
     }
 
-    message.channel.send({embed: infoEmbed})
+    message.channel.send({ embed: infoEmbed })
   },
   permissions: [],
   requiredRoles: [],
-};
+}
