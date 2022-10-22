@@ -86,6 +86,8 @@ module.exports.listen = (client) => {
   client.on("message", (message) => {
     const { member, content, guild } = message
 
+    console.log(message.content)
+
     for (thisPrefix of PREFIXES) {
       if (content.toLowerCase().startsWith(thisPrefix)) {
         prefix = thisPrefix
