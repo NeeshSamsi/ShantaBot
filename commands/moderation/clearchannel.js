@@ -1,7 +1,7 @@
 const { MessageFlags } = require("discord.js")
 
 module.exports = {
-  commands: ["cc", "clearchannel"],
+  commands: ["clearchannel", "cc"],
   description: "Deletes specified number of messages.",
   expectedArgs: "<no. of messages> <optional channel>",
   permissionError: "You need Admin permissions to run this command.",
