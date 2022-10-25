@@ -6,27 +6,32 @@ module.exports = {
   minArgs: 0,
   maxArgs: 0,
   callback: (message, arguments, text) => {
-    const chance = Math.floor(Math.random() * (5 + 1))
+    const getChance = () => {
+      if (Math.round(Math.random() * 100) / 100 <= 0.16) {
+        return true
+      } else {
+        return false
+      }
+    }
+    const chance = getChance()
 
-    console.log(chance)
-
-    message.channel.send("https://tenor.com/view/gun-reload-bullet-revolver-gif-16173684")
+    message.channel.send("https://tenor.com/view/russian-roulette-gun-gif-24197229")
 
     setTimeout(function () {
       message.channel.send(
         "https://tenor.com/view/link-neal-roulette-rhett-and-link-gmm-good-mythical-morning-gif-11514249"
       )
-    }, 2000)
+    }, 4000)
 
     setTimeout(function () {
-      if (chance === 1) {
-        message.channel.send("https://tenor.com/view/kermit-shoot-lol-gun-frog-gif-16181496")
+      if (chance) {
+        message.channel.send("https://tenor.com/view/pull-the-trigger-fire-pistol-bullet-shoot-gif-14079588")
       } else {
         message.channel.send(
           "https://tenor.com/view/bubbles-home-alone-kevin-mccallister-macaulay-culkin-fake-gun-gif-17318176"
         )
       }
-    }, 4000)
+    }, 8000)
   },
   permissions: [],
   requiredRoles: [],
