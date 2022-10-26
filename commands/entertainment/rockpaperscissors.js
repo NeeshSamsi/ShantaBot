@@ -5,6 +5,7 @@ function getRandomInt(min, max) {
 module.exports = {
   commands: ["rockpaperscissors", "rps"],
   description: "Play Rock Paper Scissors with me.",
+  expectedArgs: "<option: Rock, Paper or Scissors>",
   minArgs: 1,
   maxArgs: 1,
   callback: (message, arguments, text) => {
