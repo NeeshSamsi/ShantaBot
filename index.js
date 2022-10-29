@@ -1,23 +1,32 @@
-const path = require("path")
-const fs = require("fs")
-const Discord = require("discord.js")
+import fs from "node:fs"
+import path from "node:path"
+import { fileURLToPath } from "node:url"
+import dotenv from "dotenv"
+import Discord from "discord.js"
+
+dotenv.config()
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
+
 const allIntents = new Discord.Intents(32767)
 const client = new Discord.Client({
   intents: allIntents,
 })
-require("dotenv").config()
 
-const birthday = require("./birthday")
-const memberCount = require("./memberCount")
-const count = require("./count")
+import { isBdayToday } from "./birthday.js"
+import memberCount from "./memberCount.js"
+import count from "./count.js"
 
 client.on("ready", async () => {
   console.log("The client is ready!")
 
   const baseFile = "command-base.js"
-  const commandBase = require(path.join(__dirname, "commands", baseFile))
+  const commandBase = await import(path.join(__dirname, "commands", baseFile))
 
-  const readCommands = (dir) => {
+  console.log(path.join(__dirname, "commands", baseFile), commandBase)
+
+  const readCommands = async (dir) => {
     const files = fs.readdirSync(path.join(__dirname, dir))
 
     for (const file of files) {
@@ -26,8 +35,8 @@ client.on("ready", async () => {
       if (stat.isDirectory()) {
         readCommands(path.join(dir, file))
       } else if (file !== baseFile) {
-        const options = require(path.join(__dirname, dir, file))
-        commandBase(options)
+        const options = await import(path.join(__dirname, dir, file))
+        commandBase.register(options)
       }
     }
   }
@@ -38,7 +47,7 @@ client.on("ready", async () => {
 
   client.user.setActivity("you", { type: "PLAYING" })
 
-  birthday.isBdayToday(client)
+  isBdayToday(client)
   memberCount(client)
   count(client)
 })

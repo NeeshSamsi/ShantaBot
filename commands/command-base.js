@@ -1,4 +1,6 @@
-require("dotenv").config()
+import dotenv from "dotenv"
+
+dotenv.config()
 
 const PREFIXES = process.env.PREFIXES.split(",")
 
@@ -53,7 +55,7 @@ const validatePermissions = (permissions) => {
 
 const allCommands = {}
 
-module.exports = (commandOptions) => {
+export const register = (commandOptions) => {
   let { commands, permissions = [] } = commandOptions
 
   // Ensure commands and aliases are in an array
@@ -81,7 +83,7 @@ module.exports = (commandOptions) => {
   }
 }
 
-module.exports.listen = (client) => {
+export const listen = (client) => {
   // Listen for messages
   client.on("message", (message) => {
     const { member, content, guild } = message
@@ -93,10 +95,10 @@ module.exports.listen = (client) => {
     }
 
     // Split content and get args
-    const arguments = content.split(/[ ]+/)
+    const args = content.split(/[ ]+/)
 
     // getting prefix + command
-    const name = arguments.splice(0, 2).join(" ").toLowerCase()
+    const name = args.splice(0, 2).join(" ").toLowerCase()
 
     if (name.startsWith(prefix)) {
       const command = allCommands[name.replace(prefix, "")]
@@ -137,13 +139,13 @@ module.exports.listen = (client) => {
       }
 
       // Ensure we have correct number or arguments
-      if (arguments.length < minArgs || (maxArgs !== null && arguments.length > maxArgs)) {
+      if (args.length < minArgs || (maxArgs !== null && args.length > maxArgs)) {
         message.reply(`Incorrect syntax! use ${name} ${expectedArgs}`)
         return
       }
 
       // Handle custom command code
-      callback(message, arguments, arguments.join(" "))
+      callback(message, args, args.join(" "))
     }
   })
 }

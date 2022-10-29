@@ -2,14 +2,14 @@ function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min)
 }
 
-module.exports = {
+export default {
   commands: ["rockpaperscissors", "rps"],
   description: "Play Rock Paper Scissors with me.",
   expectedArgs: "<option: Rock, Paper or Scissors>",
   minArgs: 1,
   maxArgs: 1,
-  callback: (message, arguments, text) => {
-    const argument = arguments[0].toLowerCase()
+  callback: (message, args, text) => {
+    const argument = args[0].toLowerCase()
 
     const random = getRandomInt(0, 2)
 

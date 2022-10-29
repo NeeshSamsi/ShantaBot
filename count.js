@@ -1,4 +1,4 @@
-module.exports = (client) => {
+export default (client) => {
   const channelId = "1032935088536694845"
 
   client.on("message", (message) => {

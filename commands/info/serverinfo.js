@@ -1,11 +1,11 @@
-module.exports = {
+export default {
   commands: ["serverinfo", "info"],
   descriptions: "Returns incomplete server info",
   expectedArgs: "",
   permissionError: "You do not have permission to run this command.",
   minArgs: 0,
   maxArgs: 0,
-  callback: (message, arguments, text) => {
+  callback: (message, args, text) => {
     const { guild } = message
 
     const { name, region, memberCount, owner } = guild

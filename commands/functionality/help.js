@@ -1,19 +1,23 @@
-const fs = require("fs")
-const path = require("path")
+import fs from "fs"
+import path from "path"
+import { fileURLToPath } from "url"
 
-module.exports = {
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
+
+export default {
   commands: "help",
   description: "Lists all available commands and their uses.",
   expectedArgs: "<command>",
   permissionError: "You do not have permission to run this command.",
   minArgs: 0,
   maxArgs: 1,
-  callback: (message, arguments, text) => {
+  callback: (message, args, text) => {
     const baseFile = "command-base.js"
 
     let allCommands = []
 
-    const readCommands = (dir) => {
+    const readCommands = async (dir) => {
       const files = fs.readdirSync(dir)
 
       for (const file of files) {
@@ -22,7 +26,7 @@ module.exports = {
         if (stat.isDirectory()) {
           readCommands(path.join(dir, file))
         } else if (file !== baseFile) {
-          const options = require(path.join(dir, file))
+          const options = await import(path.join(dir, file))
           allCommands.push(options)
         }
       }
@@ -59,13 +63,13 @@ module.exports = {
       }`
     }
 
-    if (arguments[0]) {
+    if (args[0]) {
       const specificCommand = commands.filter((command) => {
         if (typeof command.name === "string") {
-          return command.name === arguments[0]
+          return command.name === args[0]
         } else {
           for (const name of command.name) {
-            return name === arguments[0]
+            return name === args[0]
           }
         }
       })[0]

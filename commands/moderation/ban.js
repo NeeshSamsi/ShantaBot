@@ -1,14 +1,14 @@
-module.exports = {
+export default {
   commands: ["ban"],
   description: "Bans specified user.",
   expectedArgs: "<@user> <reason>",
   permissionError: "You need Admin permission to run this command.",
   minArgs: 2,
   maxArgs: null,
-  callback: (message, arguments, text) => {
+  callback: (message, args, text) => {
     const { guild, author } = message
-    const reason = text.replace(`${arguments[0]} `, "")
-    const targetUserId = arguments[0].replace(/[\\<>@#&!]/g, "")
+    const reason = text.replace(`${args[0]} `, "")
+    const targetUserId = args[0].replace(/[\\<>@#&!]/g, "")
     const targetUser = message.guild.members.cache.get(targetUserId)
 
     const dmMsg = `<@${targetUserId}> you been banned from ${guild.name} for ${reason}`

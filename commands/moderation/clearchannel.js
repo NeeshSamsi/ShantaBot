@@ -1,15 +1,13 @@
-const { MessageFlags } = require("discord.js")
-
-module.exports = {
+export default {
   commands: ["clearchannel", "cc"],
   description: "Deletes specified number of messages.",
   expectedArgs: "<no. of messages> <optional channel>",
   permissionError: "You need Admin permissions to run this command.",
   minArgs: 1,
   maxArgs: 2,
-  callback: (message, arguments, text) => {
-    const amount = parseInt(arguments[0])
-    const channelArg = arguments[1]
+  callback: (message, args, text) => {
+    const amount = parseInt(args[0])
+    const channelArg = args[1]
 
     // message.guild.channels.cache.find()
 

@@ -1,9 +1,9 @@
-module.exports = {
+export default {
   commands: "ping",
   description: 'Simply replies with "Pong!"',
   minArgs: 0,
   maxArgs: 0,
-  callback: (message, arguments, text) => {
+  callback: (message, args, text) => {
     message.reply("Pong!")
   },
 }

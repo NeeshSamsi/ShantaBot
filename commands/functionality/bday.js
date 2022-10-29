@@ -1,13 +1,19 @@
-module.exports = {
+import path from "node:path"
+import { fileURLToPath } from "node:url"
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
+
+export default {
   commands: ["birthday", "bday"],
   description: "Forgot what that does tbh.",
   expectedArgs: "<optional name> \n (Names: 'Pattu', 'Shan', 'Sem', 'Ishrat', 'Chakku', 'Neesh')",
   permissionError: "You do not have permission to run this command.",
   minArgs: 0,
   maxArgs: 1,
-  callback: (message, arguments, text) => {
+  callback: async (message, args, text) => {
     const bdayFilePath = __dirname.replace("\\commands\\functionality", "") + "\\birthday.js"
-    const birthday = require(bdayFilePath)
+    const birthday = await import(bdayFilePath)
 
     const now = new Date()
     const bdaysData = [
@@ -43,7 +49,7 @@ module.exports = {
       },
     ]
 
-    if (arguments.length === 0) {
+    if (args.length === 0) {
       const bdayObject = birthday.getClosest(bdaysData, now)
       const daysLeft = birthday.getCountdown(bdayObject.birthdate - now) + 1
       console.log(daysLeft)
@@ -54,7 +60,7 @@ module.exports = {
         message.channel.send(`Tomorrow is ${bdayObject.name}'s Birthday!`)
       }
     } else {
-      const bdayObject = bdaysData.find((obj) => obj.name.toLowerCase() === arguments[0].toLowerCase())
+      const bdayObject = bdaysData.find((obj) => obj.name.toLowerCase() === args[0].toLowerCase())
       if (bdayObject) {
         const daysLeft = birthday.getCountdown(bdayObject.birthdate - now) + 1
         if (daysLeft !== 1) {
@@ -64,7 +70,7 @@ module.exports = {
         }
       } else {
         message.channel.send(
-          `${arguments[0]} is not part of the data, please use 'Pattu', 'Shan', 'Sem', 'Ishrat', 'Chakku', 'Neesh'`
+          `${args[0]} is not part of the data, please use 'Pattu', 'Shan', 'Sem', 'Ishrat', 'Chakku', 'Neesh'`
         )
       }
     }
