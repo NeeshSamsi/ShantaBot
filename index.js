@@ -1,9 +1,9 @@
 const path = require("path")
 const fs = require("fs")
 const Discord = require("discord.js")
-const allIntents = new Discord.Intents(32767)
+// const allIntents = new Discord.Intents(32767)
 const client = new Discord.Client({
-  intents: allIntents,
+  intents: 32767,
 })
 require("dotenv").config()
 
