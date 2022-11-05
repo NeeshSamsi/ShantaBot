@@ -1,3 +1,4 @@
+const path = require("node:path")
 const { glob } = require("glob")
 const { promisify } = require("util")
 
@@ -10,7 +11,15 @@ async function loadFiles(dir) {
     delete require.cache[require.resolve(file)]
   })
 
-  return files
+  filesObject = files.map((file) => {
+    const filePath = file.split("/")
+    filePath.pop()
+    const parentDir = filePath.pop()
+
+    return { file, parentDir }
+  })
+
+  return filesObject
 }
 
 module.exports = { loadFiles }
