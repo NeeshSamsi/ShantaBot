@@ -7,8 +7,8 @@ async function loadEvents(client) {
   await client.events.clear()
 
   const files = await loadFiles("events")
-  files.forEach((file) => {
-    const event = require(file)
+  files.forEach((fileObject) => {
+    const event = require(fileObject.file)
 
     const execute = (...args) => event.execute(...args, client)
 

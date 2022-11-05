@@ -9,10 +9,10 @@ async function loadCommands(client) {
   const commandsArray = []
 
   const files = await loadFiles("commands")
-  files.forEach((file) => {
-    const command = require(file)
+  files.forEach((fileObject) => {
+    const command = require(fileObject.file)
 
-    client.commands.set(command.data.name, command)
+    client.commands.set(command.data.name, { ...command, category: fileObject.parentDir })
 
     commandsArray.push(command.data.toJSON())
 
