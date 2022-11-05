@@ -17,24 +17,12 @@ module.exports = {
       .setColor("White")
       .setTitle("Hi, I am Shanta Bai.")
       .setDescription(
-        "I am the brain child of Neeshツ. I was forged by his intellect in desperate times to fill the void in his heart and bring purpose to his server. Now he pimps me out to be controlled and commanded by others. SOMEBODY HELPP MEE !!!"
+        "I am the brain child of Neeshツ. I was forged by his intellect in desperate times to fill the void in his heart and bring purpose to his server."
       )
       .setThumbnail(client.user.avatarURL())
       .setFooter({ text: "To use any of these commands, type /.", iconURL: client.user.avatarURL() })
 
     const commands = {}
-    // const commands = {
-    //   category: [
-    //     { name, description},
-    //     { name, description},
-    //     { name, description},
-    //   ],
-    //   category: [
-    //     { name, description},
-    //     { name, description},
-    //     { name, description},
-    //   ]
-    // }
 
     client.commands.forEach((command, commandName) => {
       if (commandName === "reload") return
