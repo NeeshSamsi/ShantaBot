@@ -3,7 +3,7 @@ const { ChatInputCommandInteraction, SlashCommandBuilder, EmbedBuilder, Client, 
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("poll")
-    .setDescription("Post a poll. Add a channel or post to the current channel")
+    .setDescription("Need to settle an argument? Post a poll. (Add a channel or post to this channel)")
     .addStringOption((option) => option.setName("title").setDescription("Title of the poll.").setRequired(true))
     .addStringOption((option) =>
       option.setName("description").setDescription("Description of the poll.").setRequired(true)

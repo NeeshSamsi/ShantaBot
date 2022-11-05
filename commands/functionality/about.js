@@ -5,9 +5,7 @@ const { ChatInputCommandInteraction, SlashCommandBuilder, EmbedBuilder } = requi
 const capitalize = require("../../functions/capitalize")
 
 module.exports = {
-  data: new SlashCommandBuilder()
-    .setName("about")
-    .setDescription("Gives some information about Shanta and lists all available commands."),
+  data: new SlashCommandBuilder().setName("about").setDescription("Learn more about me and what I can do for you."),
   /**
    *
    * @param {ChatInputCommandInteraction} interaction
