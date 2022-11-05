@@ -20,6 +20,7 @@ module.exports = {
         "I am the brain child of Neeshツ. I was forged by his intellect in desperate times to fill the void in his heart and bring purpose to his server."
       )
       .setThumbnail(client.user.avatarURL())
+      .addFields({ name: "SLASH COMMANDS :", value: "All available commands. Type / to use any of them." })
       .setFooter({ text: "To use any of these commands, type /.", iconURL: client.user.avatarURL() })
 
     const commands = {}
