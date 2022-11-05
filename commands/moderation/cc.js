@@ -3,7 +3,7 @@ const { ChatInputCommandInteraction, SlashCommandBuilder, ChannelType, EmbedBuil
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("cc")
-    .setDescription("Clear channel ... Not really. Delete number of messages.")
+    .setDescription("Clear channel... (Not really) Just delete some messages.")
     .addIntegerOption((option) =>
       option.setName("number").setDescription("Enter the number of messages to be deleted").setRequired(true)
     )

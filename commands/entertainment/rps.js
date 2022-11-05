@@ -6,7 +6,7 @@ const capitalize = require("../../functions/capitalize")
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("rps")
-    .setDescription("Play Rock, Paper, Scissors with me.")
+    .setDescription("Play Rock, Paper, Scissors with me. I'm quite the champ!")
     .addStringOption((option) =>
       option
         .setName("choice")
