@@ -24,10 +24,10 @@ module.exports = {
     const commands = {}
 
     client.commands.forEach((command, commandName) => {
-      if (commandName === "reload") return
-
       const { name, description } = command.data
       const { category } = command
+
+      if (category === "developer") return
 
       if (commands[category]) {
         commands[category] = [...commands[category], { name, description }]
@@ -37,6 +37,8 @@ module.exports = {
     })
 
     for (const category in commands) {
+      if (category === "developer") return
+
       const categoryDescription = fs
         .readFileSync(`${process.cwd().replace(/\\/g, "/")}/commands/${category}/description.txt`)
         .toString()
