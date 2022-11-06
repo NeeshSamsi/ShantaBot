@@ -1,4 +1,4 @@
-const { Client, Events } = require("discord.js")
+const { Client, Events, ActivityType } = require("discord.js")
 const { loadCommands } = require("../../handlers/commandHandler")
 
 module.exports = {
