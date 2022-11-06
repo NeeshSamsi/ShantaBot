@@ -1,7 +1,7 @@
 const { ChatInputCommandInteraction, Client, SlashCommandBuilder, EmbedBuilder } = require("discord.js")
 
-const getRandomInt = require("../../functions/getRandomInt")
-const capitalize = require("../../functions/capitalize")
+const getRandomInt = require("../../functions/utils/getRandomInt")
+const capitalize = require("../../functions/utils/capitalize")
 
 module.exports = {
   data: new SlashCommandBuilder()

@@ -2,7 +2,7 @@ const fs = require("node:fs")
 
 const { ChatInputCommandInteraction, SlashCommandBuilder, EmbedBuilder } = require("discord.js")
 
-const capitalize = require("../../functions/capitalize")
+const capitalize = require("../../functions/utils/capitalize")
 
 module.exports = {
   data: new SlashCommandBuilder().setName("about").setDescription("Learn more about me and what I can do for you."),

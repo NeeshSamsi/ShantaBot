@@ -1,6 +1,6 @@
 const { ChatInputCommandInteraction, SlashCommandBuilder } = require("discord.js")
 
-const getRandomInt = require("../../functions/getRandomInt")
+const getRandomInt = require("../../functions/utils/getRandomInt")
 
 module.exports = {
   data: new SlashCommandBuilder().setName("rr").setDescription("Play Russian Roulette. Do you trust your luck?"),
