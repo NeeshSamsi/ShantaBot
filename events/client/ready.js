@@ -1,9 +1,14 @@
+const { Client, Events } = require("discord.js")
 const { loadCommands } = require("../../handlers/commandHandler")
 
 module.exports = {
-  name: "ready",
+  name: Events.ClientReady,
   once: true,
-  execute(client) {
+  /**
+   *
+   * @param {Client} client
+   */
+  async execute(client) {
     console.log("\nThe client is now ready.\n")
 
     loadCommands(client)
