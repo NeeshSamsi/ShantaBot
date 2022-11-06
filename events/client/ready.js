@@ -12,5 +12,7 @@ module.exports = {
     console.log("\nThe client is now ready.\n")
 
     loadCommands(client)
+
+    client.user.setActivity("you", { type: ActivityType.Playing })
   },
 }
