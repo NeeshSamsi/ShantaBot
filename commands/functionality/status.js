@@ -1,24 +1,34 @@
-module.exports = {
-  commands: ["status"],
-  description: "Set my status, by default: PLAYING you",
-  expectedArgs: "<optional type (watching / listening / playing / streaming)> <status text>",
-  permissionError: "You do not have permission to run this command.",
-  minArgs: 1,
-  maxArgs: null,
-  callback: (message, arguments, text) => {
-    const activityTypes = ["WATCHING", "LISTENING", "PLAYING", "STREAMING"]
-    let activityType = "PLAYING"
-    let content = text
+const { ChatInputCommandInteraction, SlashCommandBuilder, ActivityType } = require("discord.js")
 
-    for (const actType of activityTypes) {
-      if (arguments[0].toUpperCase() === actType) {
-        activityType = actType
-        console.log(activityType)
-        content = text.replace(`${arguments[0]} `, "")
-      }
-    }
-    message.client.user.setActivity(content, { type: activityType })
+module.exports = {
+  data: new SlashCommandBuilder()
+    .setName("status")
+    .setDescription("Set Shanta's Activity Status.")
+    .addStringOption((option) =>
+      option
+        .setName("type")
+        .setDescription("Status type.")
+        .setChoices(
+          { name: "Playing", value: ActivityType[ActivityType.Playing] },
+          { name: "Watching", value: ActivityType[ActivityType.Watching] },
+          { name: "Listening", value: ActivityType[ActivityType.Listening] },
+          { name: "Streaming", value: ActivityType[ActivityType.Streaming] },
+          { name: "Competing", value: ActivityType[ActivityType.Competing] }
+        )
+        .setRequired(true)
+    )
+    .addStringOption((option) => option.setName("text").setDescription("Status text").setRequired(true)),
+  /**
+   *
+   * @param {ChatInputCommandInteraction} interaction
+   */
+  async execute(interaction) {
+    const typeInput = interaction.options.getString("type")
+    const type = ActivityType[typeInput]
+    const text = interaction.options.getString("text")
+
+    interaction.client.user.setActivity(text, { type })
+
+    interaction.reply(`Successfully set ${interaction.client.user.username}'s status to '${typeInput} ${text}'.`)
   },
-  permissions: [],
-  requiredRoles: [],
 }

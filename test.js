@@ -1,2 +1,16 @@
-const birthdate = new Date("November 22, 2021 00:00:00");
-const now = new Date();
+const commands = {
+  category1: [
+    { name: "sth", description: "desc" },
+    { name: "sth", description: "desc" },
+    { name: "sth", description: "desc" },
+  ],
+  category2: [
+    { name: "sth", description: "desc" },
+    { name: "sth", description: "desc" },
+    { name: "sth", description: "desc" },
+  ],
+}
+
+for (const category in commands) {
+  console.log(category)
+}

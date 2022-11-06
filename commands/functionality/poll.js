@@ -1,35 +1,43 @@
+const { ChatInputCommandInteraction, SlashCommandBuilder, EmbedBuilder, Client, ChannelType } = require("discord.js")
+
 module.exports = {
-  commands: "poll",
-  description: "Create a poll with 2 emoji reactions",
-  expectedArgs: "<optional emoji> <optional emoji>",
-  permissionError: "You do not have permission to run this command.",
-  minArgs: 0,
-  maxArgs: null,
-  callback: async (message, arguments, text) => {
-    let defaultReactions = ["👍", "👎"]
+  data: new SlashCommandBuilder()
+    .setName("poll")
+    .setDescription("Post a poll. (Add a channel or post to this channel)")
+    .addStringOption((option) => option.setName("title").setDescription("Title of the poll.").setRequired(true))
+    .addStringOption((option) =>
+      option.setName("description").setDescription("Description of the poll.").setRequired(true)
+    )
+    .addChannelOption((option) =>
+      option
+        .setName("channel")
+        .setDescription("Channel to post the poll.")
+        .setRequired(false)
+        .addChannelTypes(ChannelType.GuildText)
+    ),
+  /**
+   *
+   * @param {ChatInputCommandInteraction} interaction
+   * @param {Client} client
+   */ async execute(interaction, client) {
+    const title = interaction.options.getString("title")
+    const description = interaction.options.getString("description")
+    const channel = interaction.options.getChannel("channel")
+      ? interaction.options.getChannel("channel")
+      : interaction.channel
 
-    await message.delete()
+    const pollEmbed = new EmbedBuilder()
+      .setColor("White")
+      .setAuthor({ name: interaction.user.username, iconURL: interaction.user.avatarURL() })
+      .setTitle(title)
+      .setDescription(description)
+      .setFooter({ text: "To create your own poll, type /poll.", iconURL: client.user.avatarURL() })
 
-    targetMsg = await message.channel.messages.fetch({ limit: 1 })
+    const poll = await channel.send({ embeds: [pollEmbed], fetchReply: true })
 
-    const addReactions = (reactions) => {
-      targetMsg.first().react(`${reactions[0]}`)
-      reactions.shift()
+    interaction.reply({ content: `Successfully posted Poll - ${title} to ${channel}`, ephemeral: true })
 
-      if (reactions.length > 0) {
-        setTimeout(() => {
-          addReactions(reactions)
-        }, 750)
-      }
-    }
-
-    if (arguments.length === 0) {
-      addReactions(defaultReactions)
-    } else {
-      let customReactions = arguments
-      addReactions(customReactions)
-    }
+    poll.react("✅")
+    poll.react("❎")
   },
-  permissions: [],
-  requiredRoles: [],
 }
