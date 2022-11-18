@@ -1,12 +1,16 @@
 const { Client } = require("discord.js")
-const prisma = require("../../prisma/client")
+const { getXataClient } = require("../../lib/xata")
+
+const xata = getXataClient()
 
 /**
  *
  * @param {Client} client
  */
 module.exports = async (client) => {
-  const guilds = await prisma.guild.findMany()
+  const guilds = await xata.db.Guild.getAll()
+
+  console.log(guilds)
 
   guilds.forEach(async ({ id, memberCountChannel }) => {
     const guild = await client.guilds.cache.get(id)

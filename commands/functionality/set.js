@@ -1,6 +1,8 @@
 const { SlashCommandBuilder, ChannelType, ChatInputCommandInteraction } = require("discord.js")
 
-const prisma = require("../../prisma/client")
+const { getXataClient } = require("../../lib/xata")
+
+const xata = getXataClient()
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -31,14 +33,7 @@ module.exports = {
         const memberCountChannel = interaction.options.getChannel("countchannel")
 
         try {
-          await prisma.guild.upsert({
-            where: { id: guildID },
-            update: { memberCountChannel: memberCountChannel.id },
-            create: {
-              id: guildID,
-              memberCountChannel: memberCountChannel.id,
-            },
-          })
+          await xata.db.Guild.createOrUpdate(guildID, { memberCountChannel: memberCountChannel.id })
 
           interaction.reply(`Successfully set ${interaction.guild.name}'s Member Count channel.`)
         } catch (err) {
