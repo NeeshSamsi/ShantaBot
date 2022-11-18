@@ -11,17 +11,14 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@prisma/client": "^3.7.0",
+    "@xata.io/client": "^0.21.0",
     "ascii-table": "^0.0.9",
     "discord.js": "^14.6.0",
     "dotenv": "^16.0.3",
-    "glob": "^8.0.3",
-    "pocketbase": "^0.7.4"
+    "glob": "^8.0.3"
   },
   "devDependencies": {
     "@types/node": "^18.11.7",
-    "nodemon": "^2.0.20",
-    "prisma": "^3.7.0",
-    "ts-node": "^10.9.1"
+    "nodemon": "^2.0.20"
   }
 }
