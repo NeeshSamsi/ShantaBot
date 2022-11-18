@@ -1,0 +1,8 @@
+{
+  "databaseURL": "https://Neesh-s-workspace-tcjig6.eu-west-1.xata.sh/db/ShantaBot",
+  "codegen": {
+    "output": "lib/xata.js",
+    "moduleType": "cjs",
+    "declarations": true
+  }
+}
