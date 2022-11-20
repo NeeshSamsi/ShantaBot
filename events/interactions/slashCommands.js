@@ -19,6 +19,17 @@ module.exports = {
       return interaction.reply({ content: "This command is only available to my owner, Neesh", ephemeral: true })
     }
 
-    command.execute(interaction, client)
+    const subCommand = interaction.options.getSubcommand(false)
+    if (subCommand) {
+      const subCommandFile = client.subCommands.get(`${interaction.commandName}.${subCommand}`)
+
+      if (!subCommandFile) {
+        return interaction.reply({ content: "This subcommand is outdated.", ephemeral: true })
+      }
+
+      subCommandFile.execute(interaction, client)
+    } else {
+      command.execute(interaction, client)
+    }
   },
 }
