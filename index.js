@@ -12,10 +12,8 @@ const client = new Client({
 })
 
 dotenv.config()
-
-client.commands = new Collection()
-client.subCommands = new Collection()
 client.events = new Collection()
+client.commands = new Collection()
 
 loadEvents(client)
 

@@ -5,17 +5,12 @@ async function loadCommands(client) {
   const table = new ascii().setHeading("Commands", "Status")
 
   await client.commands.clear()
-  await client.subCommands.clear()
 
   const commandsArray = []
 
   const files = await loadFiles("commands")
   files.forEach((fileObject) => {
     const command = require(fileObject.file)
-
-    if (command.subCommand) {
-      return client.subCommands.set(command.subCommand, command)
-    }
 
     client.commands.set(command.data.name, { ...command, category: fileObject.parentDir })
 
