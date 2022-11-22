@@ -23,7 +23,7 @@ module.exports = {
 
     const commands = {}
 
-    client.commands.forEach((command) => {
+    client.commands.forEach((command, commandName) => {
       const { name, description } = command.data
       const { category } = command
 
