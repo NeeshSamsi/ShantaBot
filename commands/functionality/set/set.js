@@ -22,14 +22,6 @@ module.exports = {
         .setDescription("Set your profile parameters.")
         .addSubcommand((subcommand) =>
           subcommand
-            .setName("nickname")
-            .setDescription("Set your profile nickname. (defaults to Server Nick)")
-            .addStringOption((option) =>
-              option.setName("nickname").setDescription("Enter your nickname.").setRequired(true)
-            )
-        )
-        .addSubcommand((subcommand) =>
-          subcommand
             .setName("birthday")
             .setDescription("Set your birthday so Shanta can wish you. (Format: DD-MM-YYY)")
             .addIntegerOption((option) =>
