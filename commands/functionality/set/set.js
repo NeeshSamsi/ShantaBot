@@ -31,7 +31,7 @@ module.exports = {
         .addSubcommand((subcommand) =>
           subcommand
             .setName("birthday")
-            .setDescription("Set your birthday so Shanta can wish you.")
+            .setDescription("Set your birthday so Shanta can wish you. (Format: DD-MM-YYY)")
             .addIntegerOption((option) =>
               option.setName("day").setDescription("Day of the month.").setMaxValue(31).setRequired(true)
             )
