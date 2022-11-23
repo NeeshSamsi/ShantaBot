@@ -19,7 +19,7 @@ module.exports = {
       return interaction.reply({ content: "This command is only available to my owner, Neesh", ephemeral: true })
     }
 
-    const subCommand = interaction.options.getSubcommand()
+    const subCommand = interaction.options.getSubcommand(false)
     if (subCommand) {
       const subCommandFile = client.subCommands.get(`${interaction.commandName} ${subCommand}`)
 
