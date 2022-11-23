@@ -32,8 +32,6 @@ module.exports = {
 
       const subCommandFile = client.subCommands.get(filePath)
 
-      console.log(filePath)
-
       if (!subCommandFile) return interaction.reply({ content: "This subcommand is outdated.", ephemeral: true })
 
       subCommandFile.execute(interaction, client)
