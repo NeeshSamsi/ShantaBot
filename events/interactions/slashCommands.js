@@ -19,9 +19,20 @@ module.exports = {
       return interaction.reply({ content: "This command is only available to my owner, Neesh", ephemeral: true })
     }
 
+    const subCommandGroup = interaction.options.getSubcommandGroup(false)
     const subCommand = interaction.options.getSubcommand(false)
     if (subCommand) {
-      const subCommandFile = client.subCommands.get(`${interaction.commandName} ${subCommand}`)
+      let filePath
+
+      if (subCommandGroup) {
+        filePath = `${interaction.commandName} ${subCommandGroup} ${subCommand}`
+      } else {
+        filePath = `${interaction.commandName} ${subCommand}`
+      }
+
+      const subCommandFile = client.subCommands.get(filePath)
+
+      console.log(filePath)
 
       if (!subCommandFile) return interaction.reply({ content: "This subcommand is outdated.", ephemeral: true })
 

@@ -13,10 +13,8 @@ async function loadFiles(dir) {
 
   filesObject = files.map((file) => {
     const filePath = file.split("/")
-    filePath.pop()
-    const parentDir = filePath.pop()
 
-    return { file, parentDir }
+    return { file, filePath }
   })
 
   return filesObject
