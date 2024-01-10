@@ -1,4 +1,8 @@
-const { ChatInputCommandInteraction, SlashCommandBuilder, Events } = require("discord.js")
+const {
+  ChatInputCommandInteraction,
+  SlashCommandBuilder,
+  Events,
+} = require("discord.js")
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -10,7 +14,8 @@ module.exports = {
         .setDescription("Specify event to simulate.")
         .addChoices(
           { name: Events.GuildMemberAdd, value: Events.GuildMemberAdd },
-          { name: Events.GuildMemberRemove, value: Events.GuildMemberRemove }
+          { name: Events.GuildMemberRemove, value: Events.GuildMemberRemove },
+          { name: Events.ChannelPinsUpdate, value: Events.ChannelPinsUpdate }
         )
         .setRequired(true)
     ),
