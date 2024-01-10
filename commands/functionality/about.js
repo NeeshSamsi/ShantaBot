@@ -1,6 +1,6 @@
 const fs = require("node:fs")
 
-const { ChatInputCommandInteraction, SlashCommandBuilder, EmbedBuilder } = require("discord.js")
+const { ChatInputCommandInteraction, Client, SlashCommandBuilder, EmbedBuilder } = require("discord.js")
 
 const capitalize = require("../../functions/utils/capitalize")
 
@@ -9,6 +9,7 @@ module.exports = {
   /**
    *
    * @param {ChatInputCommandInteraction} interaction
+   * @param {Client} client
    */
   execute(interaction, client) {
     const helpEmbed = new EmbedBuilder()
@@ -23,11 +24,12 @@ module.exports = {
 
     const commands = {}
 
-    client.commands.forEach((command, commandName) => {
+    client.commands.forEach((command) => {
       const { name, description } = command.data
       const { category } = command
 
       if (category === "developer") return
+      if (!category) return
 
       if (commands[category]) {
         commands[category] = [...commands[category], { name, description }]
