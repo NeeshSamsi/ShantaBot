@@ -14,6 +14,17 @@ async function loadCommands(client) {
     const command = require(file)
 
     if (command.subCommand) {
+      if (command.subCommandGroup) {
+        // Pop last - file name
+        filePath.pop()
+        // Pop 2nd last - subcommand group folder
+        filePath.pop()
+        // Pop 3rd last - subcommand folder
+        filePath.pop()
+        // Pop 4th last - category folder
+        const category = filePath.pop()
+        return client.subCommands.set(command.subCommand, { ...command, category })
+      }
       // Pop last - file name
       filePath.pop()
       // Pop 2nd last - subcommand folder
