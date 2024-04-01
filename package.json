@@ -11,16 +11,17 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@xata.io/client": "^0.28.3",
+    "@xata.io/client": "^0.29.3",
     "ascii-table": "^0.0.9",
     "dayjs": "^1.11.10",
     "discord.js": "^14.14.1",
-    "dotenv": "^16.3.1",
-    "glob": "^8.1.0"
+    "dotenv": "^16.4.5",
+    "glob": "^8.1.0",
+    "rss-parser": "^3.13.0"
   },
   "devDependencies": {
-    "@flydotio/dockerfile": "^0.5.0",
-    "@types/node": "^20.11.0",
-    "nodemon": "^3.0.2"
+    "@flydotio/dockerfile": "^0.5.4",
+    "@types/node": "^20.12.2",
+    "nodemon": "^3.1.0"
   }
 }
