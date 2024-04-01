@@ -1,5 +1,5 @@
 const { Events, Client } = require("discord.js")
-const updateMemberCount = require("../../functions/discord/updateMemberCount")
+const updateMemberCount = require("../../functions/updateMemberCount")
 
 module.exports = {
   name: Events.GuildMemberAdd,

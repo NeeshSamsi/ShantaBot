@@ -1,5 +1,5 @@
 async function loadCommands(client) {
-  const { loadFiles } = require("../functions/utils/fileLoader")
+  const { loadFiles } = require("../utils/fileLoader")
   const ascii = require("ascii-table")
 
   const table = new ascii().setHeading("Commands", "Status")
@@ -23,7 +23,10 @@ async function loadCommands(client) {
         filePath.pop()
         // Pop 4th last - category folder
         const category = filePath.pop()
-        return client.subCommands.set(command.subCommand, { ...command, category })
+        return client.subCommands.set(command.subCommand, {
+          ...command,
+          category,
+        })
       }
       // Pop last - file name
       filePath.pop()
@@ -31,7 +34,10 @@ async function loadCommands(client) {
       filePath.pop()
       // Pop 3rd last - category folder
       const category = filePath.pop()
-      return client.subCommands.set(command.subCommand, { ...command, category })
+      return client.subCommands.set(command.subCommand, {
+        ...command,
+        category,
+      })
     }
 
     // Pop last - file name

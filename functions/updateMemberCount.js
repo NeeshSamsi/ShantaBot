@@ -1,5 +1,5 @@
 const { Client } = require("discord.js")
-const { getXataClient } = require("../../lib/xata")
+const { getXataClient } = require("../lib/xata")
 
 const xata = getXataClient()
 

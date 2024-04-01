@@ -1,11 +1,18 @@
 const fs = require("node:fs")
 
-const { ChatInputCommandInteraction, Client, SlashCommandBuilder, EmbedBuilder } = require("discord.js")
+const {
+  ChatInputCommandInteraction,
+  Client,
+  SlashCommandBuilder,
+  EmbedBuilder,
+} = require("discord.js")
 
-const capitalize = require("../../functions/utils/capitalize")
+const capitalize = require("../../utils/capitalize")
 
 module.exports = {
-  data: new SlashCommandBuilder().setName("about").setDescription("Learn more about me and what I can do for you."),
+  data: new SlashCommandBuilder()
+    .setName("about")
+    .setDescription("Learn more about me and what I can do for you."),
   /**
    *
    * @param {ChatInputCommandInteraction} interaction
@@ -19,8 +26,14 @@ module.exports = {
         "I am the brain child of Neeshツ. I was forged by his intellect in desperate times to fill the void in his heart and bring purpose to his server."
       )
       .setThumbnail(client.user.avatarURL())
-      .addFields({ name: "SLASH COMMANDS :", value: "All available commands. Type / to use any of them." })
-      .setFooter({ text: "To use any of these commands, type /.", iconURL: client.user.avatarURL() })
+      .addFields({
+        name: "SLASH COMMANDS :",
+        value: "All available commands. Type / to use any of them.",
+      })
+      .setFooter({
+        text: "To use any of these commands, type /.",
+        iconURL: client.user.avatarURL(),
+      })
 
     const commands = {}
 
@@ -42,13 +55,24 @@ module.exports = {
       if (category === "developer") return
 
       const categoryDescription = fs
-        .readFileSync(`${process.cwd().replace(/\\/g, "/")}/commands/${category}/description.txt`)
+        .readFileSync(
+          `${process
+            .cwd()
+            .replace(/\\/g, "/")}/commands/${category}/description.txt`
+        )
         .toString()
 
-      helpEmbed.addFields({ name: capitalize(category), value: categoryDescription })
+      helpEmbed.addFields({
+        name: capitalize(category),
+        value: categoryDescription,
+      })
 
       for (const command of commands[category]) {
-        helpEmbed.addFields({ name: `/${command.name}`, value: command.description, inline: true })
+        helpEmbed.addFields({
+          name: `/${command.name}`,
+          value: command.description,
+          inline: true,
+        })
       }
     }
 
