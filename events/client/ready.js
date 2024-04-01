@@ -1,5 +1,6 @@
 const { Client, Events, ActivityType } = require("discord.js")
 const { loadCommands } = require("../../handlers/commandHandler")
+const youtubeVideoNotification = require("../../functions/youtubeVideoNotification")
 
 module.exports = {
   name: Events.ClientReady,
@@ -14,5 +15,7 @@ module.exports = {
     loadCommands(client)
 
     client.user.setActivity("you", { type: ActivityType.Playing })
+
+    youtubeVideoNotification(client)
   },
 }
