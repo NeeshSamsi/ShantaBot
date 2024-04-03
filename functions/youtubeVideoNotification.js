@@ -7,20 +7,18 @@ const Parser = require("rss-parser")
  * @param {Client} client
  */
 module.exports = async (client) => {
-  ytNotification(client)
+  await ytNotification(client)
 }
 
 async function ytNotification(client) {
+  console.log("Checking latest YouTube Videos")
+
   const xata = getXataClient()
   const parser = new Parser()
 
   const channels = await xata.db.LatestYouTubeVideo.getAll()
 
   channels.forEach(async (channel) => {
-    // Get feed -> Get latest video
-    // Compare latest video to current video
-    // if new video, send message
-
     const { id, channelID, videoID } = channel
 
     const { title, items: videos } = await parser.parseURL(
@@ -36,6 +34,8 @@ async function ytNotification(client) {
     const latestVideo = videos[0]
 
     if (videoID !== latestVideo.id) {
+      console.log(`Found new video from ${title}`)
+
       // Send message
       const guild = await client.guilds.cache.get("849545086718443520")
       const messageChannel = await guild.channels.cache.get(
@@ -50,8 +50,10 @@ async function ytNotification(client) {
       await xata.db.LatestYouTubeVideo.update(id, {
         videoID: latestVideo.id,
       })
+    } else {
+      console.log(`No new videos from ${title}`)
     }
   })
 
-  setTimeout(ytNotification(), 5 * 60 * 1000)
+  setTimeout(await ytNotification(), 5 * 60 * 1000)
 }
