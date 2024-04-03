@@ -16,6 +16,6 @@ module.exports = {
 
     client.user.setActivity("you", { type: ActivityType.Playing })
 
-    await youtubeVideoNotification(client)
+    youtubeVideoNotification(client)
   },
 }
