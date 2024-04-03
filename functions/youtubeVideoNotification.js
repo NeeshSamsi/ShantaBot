@@ -8,51 +8,61 @@ const cron = require("node-cron")
  * @param {Client} client
  */
 module.exports = async function youtubeNotifications(client) {
-  cron.schedule("*/5 * * * *", async () => {
-    console.log(
-      new Date().toLocaleString() + " Checking latest YouTube Videos..."
+  setTimeout(async () => {
+    await ytNoti(client)
+  }, 500)
+
+  cron.schedule("*/5 * * * *", ytNoti)
+}
+
+/**
+ *
+ * @param {Client} client
+ */
+async function ytNoti(client) {
+  console.log(
+    new Date().toLocaleString() + " Checking latest YouTube Videos..."
+  )
+
+  const xata = getXataClient()
+  const parser = new Parser()
+
+  const channels = await xata.db.LatestYouTubeVideo.getAll()
+
+  channels.forEach(async (channel) => {
+    const { id, channelID, videoID } = channel
+
+    const { title, items: videos } = await parser.parseURL(
+      `https://www.youtube.com/feeds/videos.xml?channel_id=${channelID}`
     )
 
-    const xata = getXataClient()
-    const parser = new Parser()
+    if (!title || videos.length === 0) {
+      console.error(
+        `Failed to get youtube feed for channel: https://youtube.com/channel/${channelID}`
+      )
+    }
 
-    const channels = await xata.db.LatestYouTubeVideo.getAll()
+    const latestVideo = videos[0]
 
-    channels.forEach(async (channel) => {
-      const { id, channelID, videoID } = channel
+    if (videoID !== latestVideo.id) {
+      console.log(`Found new video from ${title}`)
 
-      const { title, items: videos } = await parser.parseURL(
-        `https://www.youtube.com/feeds/videos.xml?channel_id=${channelID}`
+      // Send message
+      const guild = await client.guilds.cache.get("849545086718443520")
+      const messageChannel = await guild.channels.cache.get(
+        "849545086718443523"
       )
 
-      if (!title || videos.length === 0) {
-        console.error(
-          `Failed to get youtube feed for channel: https://youtube.com/channel/${channelID}`
-        )
-      }
+      messageChannel.send(
+        `Kay re bada! ${title} posted a new YouTube Video. Check it out\n${latestVideo.link}`
+      )
 
-      const latestVideo = videos[0]
-
-      if (videoID !== latestVideo.id) {
-        console.log(`Found new video from ${title}`)
-
-        // Send message
-        const guild = await client.guilds.cache.get("849545086718443520")
-        const messageChannel = await guild.channels.cache.get(
-          "849545086718443523"
-        )
-
-        messageChannel.send(
-          `Kay re bada! ${title} posted a new YouTube Video. Check it out\n${latestVideo.link}`
-        )
-
-        // Update latest video in Xata
-        await xata.db.LatestYouTubeVideo.update(id, {
-          videoID: latestVideo.id,
-        })
-      } else {
-        console.log(`No new videos from ${title}`)
-      }
-    })
+      // Update latest video in Xata
+      await xata.db.LatestYouTubeVideo.update(id, {
+        videoID: latestVideo.id,
+      })
+    } else {
+      console.log(`No new videos from ${title}`)
+    }
   })
 }
