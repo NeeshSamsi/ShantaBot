@@ -1,14 +1,17 @@
 const { Client } = require("discord.js")
 const { getXataClient } = require("../lib/xata")
 const Parser = require("rss-parser")
+const cron = require("node-cron")
 
 /**
  *
  * @param {Client} client
  */
 module.exports = async function youtubeNotifications(client) {
-  setInterval(async () => {
-    console.log("Checking latest YouTube Videos...")
+  cron.schedule("*/5 * * * *", async () => {
+    console.log(
+      new Date().toLocaleString() + " Checking latest YouTube Videos..."
+    )
 
     const xata = getXataClient()
     const parser = new Parser()
@@ -51,5 +54,5 @@ module.exports = async function youtubeNotifications(client) {
         console.log(`No new videos from ${title}`)
       }
     })
-  }, 5 * 60 * 1000)
+  })
 }
