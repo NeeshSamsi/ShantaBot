@@ -1,17 +1,14 @@
 const { Client } = require("discord.js")
 const { getXataClient } = require("../lib/xata")
 const Parser = require("rss-parser")
+const { setTimeout } = require("node:timers/promises")
 
 /**
  *
  * @param {Client} client
  */
-module.exports = async (client) => {
-  await ytNotification(client)
-}
-
-async function ytNotification(client) {
-  console.log("Checking latest YouTube Videos")
+module.exports = async function youtubeNotifications(client) {
+  console.log("Checking latest YouTube Videos...")
 
   const xata = getXataClient()
   const parser = new Parser()
@@ -55,5 +52,6 @@ async function ytNotification(client) {
     }
   })
 
-  setTimeout(await ytNotification(), 5 * 60 * 1000)
+  await setTimeout(0.5 * 60 * 1000)
+  youtubeNotifications(client)
 }
