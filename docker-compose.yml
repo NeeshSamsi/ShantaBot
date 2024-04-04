@@ -1,0 +1,6 @@
+services:
+  bot:
+    image: shantabot
+    environment:
+      - TOKEN=${TOKEN}
+      - XATA_API_KEY=${XATA_API_KEY}
