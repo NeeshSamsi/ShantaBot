@@ -21,7 +21,7 @@ dependencies:
     specifier: ^16.4.5
     version: 16.4.5
   glob:
-    specifier: ^8.0.3
+    specifier: ^8.1.0
     version: 8.1.0
   node-cron:
     specifier: ^3.0.3
