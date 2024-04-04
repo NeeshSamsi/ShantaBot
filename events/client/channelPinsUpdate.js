@@ -19,6 +19,8 @@ module.exports = {
     // Check if it's Server 2.0
     if (channel.guildId !== "849545086718443520") return
 
+    console.log(`Pinned message in ${channel.name}`)
+
     const server = await client.guilds.fetch("849545086718443520")
     const pinsChannel = await server.channels.fetch("1194319244519809054")
     const pinnedChannel = await server.channels.fetch(channel.id)
@@ -52,6 +54,8 @@ module.exports = {
           success
         )}`
       )
+
+      console.log(`Handled pinned message in ${channel.name}`)
     } catch (error) {
       pinnedMessage.reply(
         "Something went wrong trying to process this message. It will remain pinned."
