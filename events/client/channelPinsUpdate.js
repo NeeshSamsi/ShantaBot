@@ -24,7 +24,8 @@ module.exports = {
     const server = await client.guilds.fetch("849545086718443520")
     const pinsChannel = await server.channels.fetch("1194319244519809054")
     const pinnedChannel = await server.channels.fetch(channel.id)
-    const pinnedMessage = await pinnedChannel.messages.fetchPinned().first()
+    const pinnedMessagesFromChannel = await pinnedChannel.messages.fetchPinned()
+    const pinnedMessage = pinnedMessagesFromChannel.first()
 
     if (!pinnedMessage.pinned) {
       console.log("Message was unpinned, ignoring")
