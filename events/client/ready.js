@@ -14,8 +14,8 @@ module.exports = {
 
     loadCommands(client)
 
-    client.user.setActivity("something else", { type: ActivityType.Playing })
+    client.user.setActivity("you", { type: ActivityType.Playing })
 
-    // youtubeVideoNotification(client)
+    youtubeVideoNotification(client)
   },
 }
